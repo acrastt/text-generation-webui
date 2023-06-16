@@ -965,7 +965,7 @@ def create_interface():
 
         # notebook/default modes event handlers
         else:
-            shared.input_params = translate([shared.gradio[k] for k in ['textbox', 'interface_state']], translator)
+            shared.input_params = [shared.gradio[k] for k in ['textbox', 'interface_state']]
             if shared.args.notebook:
                 output_params = [shared.gradio[k] for k in ['textbox', 'html']]
             else:
