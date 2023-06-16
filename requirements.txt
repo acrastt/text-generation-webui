@@ -16,7 +16,7 @@ sentencepiece
 tqdm
 scipy
 transformers==4.30.2
-googletrans==3.1.0a0
+googletrans==4.0.0-rc1
 git+https://github.com/huggingface/peft@e45529b149c7f91ec1d4d82a5a152ef56c56cb94
 bitsandbytes==0.39.0; platform_system != "Windows"
 https://github.com/jllllll/bitsandbytes-windows-webui/raw/main/bitsandbytes-0.39.0-py3-none-any.whl; platform_system == "Windows"
