@@ -614,7 +614,7 @@ def create_interface():
 
             with gr.Tab('Text generation', elem_id='main'):
                 shared.gradio['display'] = gr.HTML(value=chat_html_wrapper(shared.history['visible'], shared.settings['name1'], shared.settings['name2'], 'chat', 'cai-chat'))
-                shared.gradio['textbox'] = translator.translate(gr.Textbox(label='Input'), src='la', dest='en').text
+                shared.gradio['textbox'] = translator.translate(gr.Textbox(label='Input'), src='ja', dest='en').text
                 with gr.Row():
                     shared.gradio['Stop'] = gr.Button('Stop', elem_id='stop')
                     shared.gradio['Generate'] = gr.Button('Generate', elem_id='Generate', variant='primary')
