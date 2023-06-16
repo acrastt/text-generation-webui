@@ -19,6 +19,17 @@ from modules.models import clear_torch_cache, local_rank
 
 translator = Translator()
 
+def translate(string, translator):
+    segment_size = 500
+    segments = []
+    for i in range(0, len(string), segment_size):
+        segment = string[i:i+segment_size]
+        segments.append(segment)
+    string=''
+    for segment in segments:
+        string += translator.translate(segment, src='en', dest='ja').text
+    return string
+
 def generate_reply(*args, **kwargs):
     shared.generation_lock.acquire()
     try:
@@ -115,15 +126,15 @@ def get_reply_from_output_ids(output_ids, input_ids, original_question, state, i
     if not is_chat:
         reply = apply_extensions('output', reply)
 
-    return translator.translate(reply, src='en', dest='ja').text
+    return translate(reply, translator)
 
 
 def formatted_outputs(reply, model_name):
     if shared.model_type == 'gpt4chan':
         reply = fix_gpt4chan(reply)
-        return translator.translate(reply, src='en', dest='ja').text, generate_4chan_html(translator.translate(reply, src='en', dest='ja').text)
+        return translate(reply, translator), generate_4chan_html(translate(reply, translator))
     else:
-        return translator.translate(reply, src='en', dest='ja').text, generate_basic_html(translator.translate(reply, src='en', dest='ja').text)
+        return translate(reply, translator), generate_basic_html(translate(reply, translator))
 
 
 def set_manual_seed(seed):
@@ -185,12 +196,12 @@ def _generate_reply(question, state, eos_token=None, stopping_strings=None, is_c
             cur_time = time.time()
             if cur_time - last_update > 0.041666666666666664:  # Limit streaming to 24 fps
                 last_update = cur_time
-                yield translator.translate(reply, src='en', dest='ja').text
+                yield translate(reply, translator)
         else:
-            yield translator.translate(reply, src='en', dest='ja').text
+            yield translate(reply, translator)
 
     if is_stream:
-        yield translator.translate(reply, src='en', dest='ja').text
+        yield translate(reply, translator)
 
 
 def generate_reply_HF(question, original_question, seed, state, eos_token=None, stopping_strings=None, is_chat=False):
@@ -304,13 +315,13 @@ def generate_reply_custom(question, original_question, seed, state, eos_token=No
             if not is_chat:
                 reply = apply_extensions('output', reply)
 
-            yield translator.translate(reply, src='en', dest='ja').text
+            yield translate(reply, translator)
         else:
             for reply in shared.model.generate_with_streaming(context=question, **generate_params):
                 if not is_chat:
                     reply = apply_extensions('output', reply)
 
-                yield translator.translate(reply, src='en', dest='ja').text
+                yield translate(reply, translator)
 
     except Exception:
         traceback.print_exc()
