@@ -43,6 +43,7 @@ import yaml
 from PIL import Image
 
 import modules.extensions as extensions_module
+from googletrans import Translator
 from modules import chat, presets, shared, training, ui, utils
 from modules.extensions import apply_extensions
 from modules.github import clone_or_pull_repository
@@ -51,6 +52,8 @@ from modules.LoRA import add_lora_to_model
 from modules.models import load_model, unload_model
 from modules.text_generation import (generate_reply_wrapper,
                                      get_encoded_length, stop_everything_event)
+
+translator = Translator()
 
 
 def load_model_wrapper(selected_model, autoload=False):
@@ -609,7 +612,7 @@ def create_interface():
 
             with gr.Tab('Text generation', elem_id='main'):
                 shared.gradio['display'] = gr.HTML(value=chat_html_wrapper(shared.history['visible'], shared.settings['name1'], shared.settings['name2'], 'chat', 'cai-chat'))
-                shared.gradio['textbox'] = gr.Textbox(label='Input')
+                shared.gradio['textbox'] = translator.translate(gr.Textbox(label='Input'), src='en', dest='fr')
                 with gr.Row():
                     shared.gradio['Stop'] = gr.Button('Stop', elem_id='stop')
                     shared.gradio['Generate'] = gr.Button('Generate', elem_id='Generate', variant='primary')
