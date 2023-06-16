@@ -9,6 +9,7 @@ import torch
 import transformers
 
 import modules.shared as shared
+from googletrans import Translator
 from modules.callbacks import (Iteratorize, Stream,
                                _SentinelTokenStoppingCriteria)
 from modules.extensions import apply_extensions
@@ -16,6 +17,7 @@ from modules.html_generator import generate_4chan_html, generate_basic_html
 from modules.logging_colors import logger
 from modules.models import clear_torch_cache, local_rank
 
+translator = Translator()
 
 def generate_reply(*args, **kwargs):
     shared.generation_lock.acquire()
@@ -113,15 +115,15 @@ def get_reply_from_output_ids(output_ids, input_ids, original_question, state, i
     if not is_chat:
         reply = apply_extensions('output', reply)
 
-    return reply
+    return translator.translate(reply, dest='zh-cn')
 
 
 def formatted_outputs(reply, model_name):
     if shared.model_type == 'gpt4chan':
         reply = fix_gpt4chan(reply)
-        return reply, generate_4chan_html(reply)
+        return translator.translate(reply, dest='zh-cn'), generate_4chan_html(reply)
     else:
-        return reply, generate_basic_html(reply)
+        return translator.translate(reply, dest='zh-cn'), generate_basic_html(reply)
 
 
 def set_manual_seed(seed):
@@ -183,12 +185,12 @@ def _generate_reply(question, state, eos_token=None, stopping_strings=None, is_c
             cur_time = time.time()
             if cur_time - last_update > 0.041666666666666664:  # Limit streaming to 24 fps
                 last_update = cur_time
-                yield reply
+                yield translator.translate(reply, dest='zh-cn')
         else:
-            yield reply
+            yield translator.translate(reply, dest='zh-cn')
 
     if is_stream:
-        yield reply
+        yield translator.translate(reply, dest='zh-cn')
 
 
 def generate_reply_HF(question, original_question, seed, state, eos_token=None, stopping_strings=None, is_chat=False):
@@ -302,13 +304,13 @@ def generate_reply_custom(question, original_question, seed, state, eos_token=No
             if not is_chat:
                 reply = apply_extensions('output', reply)
 
-            yield reply
+            yield translator.translate(reply, dest='zh-cn')
         else:
             for reply in shared.model.generate_with_streaming(context=question, **generate_params):
                 if not is_chat:
                     reply = apply_extensions('output', reply)
 
-                yield reply
+                yield translator.translate(reply, dest='zh-cn')
 
     except Exception:
         traceback.print_exc()
