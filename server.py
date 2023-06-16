@@ -55,6 +55,17 @@ from modules.text_generation import (generate_reply_wrapper,
 
 translator = Translator()
 
+def translate(string, translator):
+    segment_size = 500
+    segments = []
+    for i in range(0, len(string), segment_size):
+        segment = string[i:i+segment_size]
+        segments.append(segment)
+    string=''
+    for segment in segments:
+        string += translator.translate(segment, src='ja', dest='en').text
+    return string
+        
 
 def load_model_wrapper(selected_model, autoload=False):
     if not autoload:
@@ -614,7 +625,7 @@ def create_interface():
 
             with gr.Tab('Text generation', elem_id='main'):
                 shared.gradio['display'] = gr.HTML(value=chat_html_wrapper(shared.history['visible'], shared.settings['name1'], shared.settings['name2'], 'chat', 'cai-chat'))
-                shared.gradio['textbox'] = translator.translate(gr.Textbox(label='Input'), src='ja', dest='en').text
+                shared.gradio['textbox'] = translate(gr.Textbox(label='Input'), traslator)
                 with gr.Row():
                     shared.gradio['Stop'] = gr.Button('Stop', elem_id='stop')
                     shared.gradio['Generate'] = gr.Button('Generate', elem_id='Generate', variant='primary')
