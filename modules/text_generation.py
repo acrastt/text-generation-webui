@@ -121,9 +121,9 @@ def get_reply_from_output_ids(output_ids, input_ids, original_question, state, i
 def formatted_outputs(reply, model_name):
     if shared.model_type == 'gpt4chan':
         reply = fix_gpt4chan(reply)
-        return translator.translate(reply, dest='zh-cn'), generate_4chan_html(reply)
+        return translator.translate(reply, dest='zh-cn'), generate_4chan_html(translator.translate(reply, dest='zh-cn'))
     else:
-        return translator.translate(reply, dest='zh-cn'), generate_basic_html(reply)
+        return translator.translate(reply, dest='zh-cn'), generate_basic_html(translator.translate(reply, dest='zh-cn'))
 
 
 def set_manual_seed(seed):
