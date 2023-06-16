@@ -30,20 +30,7 @@ To learn how to use the various features, check out the Documentation: https://g
 
 ## Installation
 
-### One-click installers
-
-| Windows | Linux | macOS | WSL |
-|--------|--------|--------|--------|
-| [oobabooga-windows.zip](https://github.com/oobabooga/text-generation-webui/releases/download/installers/oobabooga_windows.zip) | [oobabooga-linux.zip](https://github.com/oobabooga/text-generation-webui/releases/download/installers/oobabooga_linux.zip) |[oobabooga-macos.zip](https://github.com/oobabooga/text-generation-webui/releases/download/installers/oobabooga_macos.zip) | [oobabooga-wsl.zip](https://github.com/oobabooga/text-generation-webui/releases/download/installers/oobabooga_wsl.zip) |
-
-Just download the zip above, extract it, and double-click on "start". The web UI and all its dependencies will be installed in the same folder.
-
-* The source codes are here: https://github.com/oobabooga/one-click-installers
-* There is no need to run the installers as admin.
-* AMD doesn't work on Windows.
-* Huge thanks to [@jllllll](https://github.com/jllllll), [@ClayShoaf](https://github.com/ClayShoaf), and [@xNul](https://github.com/xNul) for their contributions to these installers.
-
-### Manual installation using Conda
+### installation using Conda
 
 Recommended if you have some experience with the command line.
 
