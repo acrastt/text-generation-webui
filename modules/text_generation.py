@@ -29,6 +29,16 @@ def translate(string, translator):
     for segment in segments:
         string += translator.translate(segment, src='en', dest='ja').text
     return string
+def translate_2(string, translator):
+    segment_size = 500
+    segments = []
+    for i in range(0, len(string), segment_size):
+        segment = string[i:i+segment_size]
+        segments.append(segment)
+    string=''
+    for segment in segments:
+        string += translator.translate(segment, src='ja', dest='en').text
+    return string
 
 def generate_reply(*args, **kwargs):
     shared.generation_lock.acquire()
@@ -154,6 +164,7 @@ def stop_everything_event():
 
 
 def generate_reply_wrapper(question, state, eos_token=None, stopping_strings=None):
+    question = translate_2(question, translator)
     for reply in generate_reply(question, state, eos_token, stopping_strings, is_chat=False):
         if shared.model_type not in ['HF_seq2seq']:
             reply = question + reply
