@@ -72,14 +72,14 @@ The up-to-date commands can be found here: https://pytorch.org/get-started/local
 #### 3. Install the web UI
 
 ```
-git clone https://github.com/oobabooga/text-generation-webui
+git clone https://github.com/acrastt/text-generation-webui
 cd text-generation-webui
 pip install -r requirements.txt
 ```
 
 #### llama.cpp with GPU acceleration
 
-Requires the additional compilation step described here: [GPU acceleration](https://github.com/oobabooga/text-generation-webui/blob/main/docs/llama.cpp-models.md#gpu-acceleration).
+Requires the additional compilation step described here: [GPU acceleration](https://github.com/acrastt/text-generation-webui/blob/main/docs/llama.cpp-models.md#gpu-acceleration).
 
 #### bitsandbytes
 
@@ -97,7 +97,7 @@ cp docker/.env.example .env
 docker compose up --build
 ```
 
-* You need to have docker compose v2.17 or higher installed. See [this guide](https://github.com/oobabooga/text-generation-webui/blob/main/docs/Docker.md) for instructions.
+* You need to have docker compose v2.17 or higher installed. See [this guide](https://github.com/acrastt/text-generation-webui/blob/main/docs/Docker.md) for instructions.
 * For additional docker files, check out [this repository](https://github.com/Atinoda/text-generation-webui-docker).
 
 ### Updating the requirements
@@ -318,7 +318,7 @@ By default, 10 presets based on NovelAI and KoboldAI presets are included. These
 ## Contributing
 
 * Pull requests, suggestions, and issue reports are welcome. 
-* Make sure to carefully [search](https://github.com/oobabooga/text-generation-webui/issues) existing issues before starting a new one.
+* Make sure to carefully [search](https://github.com/acrastt/text-generation-webui/issues) existing issues before starting a new one.
 * If you have some experience with git, testing an open pull request and leaving a comment on whether it works as expected or not is immensely helpful.
 * A simple way to contribute, even if you are not a programmer, is to leave a 👍 on an issue or pull request that you find relevant.
 
